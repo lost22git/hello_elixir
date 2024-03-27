@@ -9,6 +9,7 @@ defmodule StructTest do
     book = struct(Book, name: "the book", price: 11.98)
     assert book.name == "the book"
     assert book.price == 11.98
+    assert book.tags == []
   end
 
   test "struct is a map" do
