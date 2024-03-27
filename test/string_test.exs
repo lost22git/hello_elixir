@@ -91,10 +91,11 @@ defmodule StringTest do
     assert String.slice("hello", 2..-2//1) == "ll"
   end
 
-  # test "string format" do
-  #   # https://www.erlang.org/doc/man/io.html#type-format
-  #   IO.puts(:io_lib.format("hello ~10s ~n", ["👻"]))
-  # end
+  test "string format" do
+    # https://www.erlang.org/doc/man/io.html#type-format
+    assert to_string(:io_lib.format("hello ~10ts ~n", ["👻"])) ==
+             "hello " <> String.duplicate(" ", 9) <> "👻 \n"
+  end
 
   test "string <=> date time" do
     assert ~U"2022-02-02T22:22:22Z" ==
