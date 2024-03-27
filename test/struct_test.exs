@@ -6,10 +6,13 @@ defmodule StructTest do
   end
 
   test "init struct" do
-    book = struct(Book, name: "the book", price: 11.98)
+    book = struct(Book, name: "the book", price: 11.99)
+
     assert book.name == "the book"
-    assert book.price == 11.98
+    assert book.price == 11.99
     assert book.tags == []
+
+    assert book == %Book{name: "the book", price: 11.99}
   end
 
   test "struct is a map" do
@@ -33,5 +36,8 @@ defmodule StructTest do
       end)
 
     assert book.tags == ["tech"]
+
+    book = %{book | price: 22.22}
+    assert book.price == 22.22
   end
 end
