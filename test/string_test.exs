@@ -68,4 +68,39 @@ defmodule StringTest do
 
     assert "{\n  \"hello\": \"elixir\"\n}\n" == json
   end
+
+  test "string split" do
+    s = "你好, elixir"
+
+    assert String.split(s, [",", " "]) == ["你好", "", "elixir"]
+
+    assert String.split(s, [",", " "], trim: true) == ["你好", "elixir"]
+
+    assert String.split(s, [",", " "], parts: 2) == ["你好", " elixir"]
+  end
+
+  test "string replace" do
+    assert String.replace("你好, elixir", "你好", "hello") == "hello, elixir"
+  end
+
+  test "string slice" do
+    # range: from..to//step
+    assert String.slice("hello", 2..3) == "ll"
+    assert String.slice("hello", 2..999) == "llo"
+    assert String.slice("hello", 2..999//2) == "lo"
+    assert String.slice("hello", 2..-2//1) == "ll"
+  end
+
+  # test "string format" do
+  #   # https://www.erlang.org/doc/man/io.html#type-format
+  #   IO.puts(:io_lib.format("hello ~10s ~n", ["👻"]))
+  # end
+
+  test "string <=> date time" do
+    assert ~U"2022-02-02T22:22:22Z" ==
+             (case(DateTime.from_iso8601("2022-02-02T22:22:22Z")) do
+                {:ok, datetime, _tz} -> datetime
+                {:error, _} -> DateTime.utc_now()
+              end)
+  end
 end
