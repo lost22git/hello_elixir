@@ -47,4 +47,12 @@ defmodule FnTest do
     info = Function.info(&foo/1)
     assert info[:name] == Function.info(&foo/1, :name) |> elem(1)
   end
+
+  test "fn with keyword list arg" do
+    assert kw_list(first_name: "foo", last_name: "bar") == "foo.bar"
+  end
+
+  def kw_list(first_name: a, last_name: b) do
+    a <> "." <> b
+  end
 end
