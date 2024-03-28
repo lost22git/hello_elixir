@@ -1,10 +1,6 @@
 defmodule MacroTest do
   use ExUnit.Case
 
-  def add(x, y) do
-    x + y
-  end
-
   test "quote to ast" do
     # 每一个 ast node 都是一个三元组 {:symbol, env, children}
     dbg(quote do: z = x + y)
