@@ -50,9 +50,7 @@ defmodule LibJasonTest do
     map = pretty_json |> Jason.decode!()
 
     # map to struct by Nestru
-    book2 =
-      map
-      |> Nestru.decode!(Book)
+    book2 = map |> Nestru.decode!(Book)
 
     assert book == book2
   end

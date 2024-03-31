@@ -26,7 +26,8 @@ defmodule HelloElixir.MixProject do
   defp deps do
     [
       {:jason, "~> 1.4"},
-      {:nestru, "~> 1.0.1"}
+      {:nestru, "~> 1.0.1"},
+      {:req, "~> 0.4.0"}
     ]
   end
 end
