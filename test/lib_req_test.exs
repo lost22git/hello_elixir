@@ -26,4 +26,26 @@ defmodule LibJasonTest do
     assert resp.status == 200
     assert resp.body |> length() > 10
   end
+
+  test "request builder" do
+    url = "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty"
+
+    proxy = {:http, "localhost", 55556, []}
+
+    # same as `Req.get!()`
+    #
+    req =
+      Req.Request.new(method: :get, url: url)
+      # NOTE: IMPORTANT 
+      # add built-in request, response, error steps
+      # register options keys for configuring those steps  (like :connect_options...)
+      |> Req.Steps.attach()
+      # set registered options key-value
+      |> Req.Request.merge_options(connect_options: [proxy: proxy])
+
+    resp = req |> Req.request!()
+
+    assert resp.status == 200
+    assert resp.body |> length() > 10
+  end
 end
