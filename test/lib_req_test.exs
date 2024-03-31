@@ -2,17 +2,23 @@ defmodule LibJasonTest do
   use ExUnit.Case
 
   test "get" do
-    resp = Req.get!("https://httpbin.org/get")
+    resp = "https://httpbin.org/get" |> Req.get!()
     assert resp.status == 200
   end
 
   test "post json" do
-    resp = Req.post!("https://httpbin.org/post", json: %{foo: "bar"})
+    resp =
+      "https://httpbin.org/post"
+      |> Req.post!(json: %{foo: "bar"})
+
     assert resp.status == 200
   end
 
   test "post form" do
-    resp = Req.post!("https://httpbin.org/post", form: [foo: "bar", foo: "baz"])
+    resp =
+      "https://httpbin.org/post"
+      |> Req.post!(form: [foo: "bar", foo: "baz"])
+
     assert resp.status == 200
   end
 
@@ -47,5 +53,13 @@ defmodule LibJasonTest do
 
     assert resp.status == 200
     assert resp.body |> length() > 10
+  end
+
+  test "raise error when response http status >=400" do
+    # see Req.Steps.handle_http_errors/1
+    #
+    assert_raise(RuntimeError, fn ->
+      Req.get!("https://httpbin.org/status/404", http_errors: :raise)
+    end)
   end
 end
