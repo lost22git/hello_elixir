@@ -1,6 +1,15 @@
 defmodule LibJasonTest do
   use ExUnit.Case
 
+  defimpl Nestru.Decoder, for: DateTime do
+    def decode_fields_hint(_empty_struct, _context, value) do
+      case DateTime.from_iso8601(value) do
+        {:ok, date_time, _offset} -> {:ok, date_time}
+        error -> error
+      end
+    end
+  end
+
   defmodule Category do
     @type t :: %__MODULE__{
             id: Integer.t(),
@@ -22,7 +31,7 @@ defmodule LibJasonTest do
           }
 
     @derive Jason.Encoder
-    @derive {Nestru.Decoder, hint: %{categories: [Category]}}
+    @derive {Nestru.Decoder, hint: %{categories: [Category], created_at: DateTime}}
     defstruct id: 0,
               name: "",
               price: 0.0,
@@ -43,11 +52,7 @@ defmodule LibJasonTest do
     # map to struct by Nestru
     book2 =
       map
-      |> Nestru.decode_from_map!(Book)
-      |> update_in([Access.key!(:created_at)], fn prev ->
-        {:ok, datetime, _tz} = DateTime.from_iso8601(prev)
-        datetime
-      end)
+      |> Nestru.decode!(Book)
 
     assert book == book2
   end
