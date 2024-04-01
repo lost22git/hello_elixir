@@ -1,4 +1,4 @@
-defmodule LibJasonTest do
+defmodule LibReqTest do
   use ExUnit.Case
 
   test "get" do
