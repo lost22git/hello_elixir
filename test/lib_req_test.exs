@@ -56,10 +56,21 @@ defmodule LibReqTest do
   end
 
   test "raise error when response http status >=400" do
-    # see Req.Steps.handle_http_errors/1
-    #
     assert_raise(RuntimeError, fn ->
       Req.get!("https://httpbin.org/status/404", http_errors: :raise)
     end)
+  end
+
+  test "path param" do
+    value = "hello_elixir"
+
+    base64_value = Base.encode64(value)
+
+    resp =
+      "https://httpbin.org/base64/:value"
+      |> Req.get!(path_params: [value: base64_value])
+
+    assert resp.status == 200
+    assert resp.body == value
   end
 end
