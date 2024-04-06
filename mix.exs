@@ -27,7 +27,9 @@ defmodule HelloElixir.MixProject do
     [
       {:jason, "~> 1.4"},
       {:nestru, "~> 1.0.1"},
-      {:req, "~> 0.4.0"}
+      {:req, "~> 0.4.0"},
+      {:tesla, "~> 1.4"},
+      {:hackney, "~> 1.17"},
     ]
   end
 end

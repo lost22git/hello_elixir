@@ -62,7 +62,7 @@ defmodule LibReqTest do
   end
 
   test "path param" do
-    value = "hello_elixir"
+    value = "hello elixir 👻"
 
     base64_value = Base.encode64(value)
 
